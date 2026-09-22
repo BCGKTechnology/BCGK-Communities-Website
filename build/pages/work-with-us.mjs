@@ -33,9 +33,9 @@ export function CareersPage() {
           ${OPEN_ROLES.map(
             (r) => `
           <div class="card card-hover flex items-center justify-between gap-4">
-            <div>
+            <div class="min-w-0">
               <h3 class="heading-4">${r.title}</h3>
-              <p class="text-sm text-gray-500 mt-1 flex items-center gap-3">
+              <p class="text-sm text-gray-500 mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
                 <span class="flex items-center gap-1">${icon("map-pin", "w-3.5 h-3.5")}${r.location}</span>
                 <span class="flex items-center gap-1">${icon("briefcase", "w-3.5 h-3.5")}${r.type}</span>
               </p>

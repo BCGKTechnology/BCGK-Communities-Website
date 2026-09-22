@@ -22,7 +22,7 @@ export function ContactUsPage() {
             </div>
             <div class="flex items-center gap-3">
               <span class="icon-tile">${icon("mail", "w-5 h-5")}</span>
-              <div><p class="text-sm text-gray-500">Email our team</p><a href="mailto:${EMAIL_GENERAL}" class="font-semibold text-ink">${EMAIL_GENERAL}</a></div>
+              <div class="min-w-0"><p class="text-sm text-gray-500">Email our team</p><a href="mailto:${EMAIL_GENERAL}" class="font-semibold text-ink">${EMAIL_GENERAL}</a></div>
             </div>
           </div>
         </div>

@@ -157,7 +157,7 @@ export function HomePage() {
           <h2 class="heading-2 mt-2">Questions, concerns, or interested in collaborating?</h2>
           <p class="body-lg text-gray-500 mt-5">Submit your contact information below and our team will follow up with you directly.</p>
           <div class="mt-8 flex flex-col gap-3 text-sm text-gray-600">
-            <p class="flex items-center gap-2">${icon("mail", "w-4 h-4 text-brand-greenDeeper")} Routed to our team at ${EMAIL_CONTACT_1} &amp; ${EMAIL_CONTACT_2}</p>
+            <p class="flex items-start gap-2"><span class="shrink-0 mt-[3px]">${icon("mail", "w-4 h-4 text-brand-greenDeeper")}</span><span class="min-w-0">Routed to our team at <a href="mailto:${EMAIL_CONTACT_1}" class="underline">${EMAIL_CONTACT_1}</a> &amp; <a href="mailto:${EMAIL_CONTACT_2}" class="underline">${EMAIL_CONTACT_2}</a></span></p>
           </div>
         </div>
         <div>${ContactForm({ id: "home-contact" })}</div>

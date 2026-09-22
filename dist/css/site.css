@@ -51,18 +51,40 @@ body { background: #ffffff; }
    state. `html`'s `overflow-x: hidden` above keeps this safe on classic
    (space-reserving) scrollbar systems, where the header can end up a
    scrollbar-width sliver wider than the visible content area. */
-.site-header { width: var(--vp-width, 100%); }
+/* Only lock the width on desktop, where the nav shift actually happened.
+   On phones (and in-app browsers like the one iMessage opens links in, or
+   with Safari page zoom), window.innerWidth can disagree with the real
+   layout width, so the header just uses its normal 100% there. */
+.site-header { width: 100%; }
+@media (min-width: 1280px) { .site-header { width: var(--vp-width, 100%); } }
+
+/* ---------------- Mobile overflow safety ----------------
+   On narrow phones, a few things were pushing content wider than the screen
+   (and html's overflow-x: hidden then silently cut it off instead of
+   showing a scrollbar):
+   1. Grid/flex "min-content blowout": a single-column grid track (the mobile
+      layout of every lg:grid-cols-2 section) grows to fit its widest
+      unbreakable child -- a long email address, a login form, a nowrap
+      button -- so the whole column, headings and paragraphs included, ends
+      up wider than the viewport. min-width: 0 lets the track shrink to the
+      screen and the content wrap inside it instead.
+   2. Long unbreakable strings (email addresses) that can't wrap at all.
+   3. Display headings sized in fixed rems, so a single long word
+      ("Communities", "Accessibility") could be wider than a small phone. */
+.grid > * { min-width: 0; }
+body { overflow-wrap: break-word; }
+a[href^="mailto:"], .break-anywhere { overflow-wrap: anywhere; }
 
 /* ---------------- Typography scale (from DESIGN.md) ---------------- */
 
 .heading-1 {
   font-family: 'Fraunces', Georgia, ui-serif, serif;
-  font-size: 2.75rem; line-height: 1.12; font-weight: 500; letter-spacing: -0.015em;
+  font-size: clamp(2rem, 10vw, 2.75rem); line-height: 1.12; font-weight: 500; letter-spacing: -0.015em;
 }
 @media (min-width: 768px) { .heading-1 { font-size: 4.25rem; letter-spacing: -0.02em; } }
 
 .heading-2 {
-  font-size: 1.875rem; line-height: 1.15; font-weight: 600; letter-spacing: -0.015em;
+  font-size: clamp(1.5rem, 7.5vw, 1.875rem); line-height: 1.15; font-weight: 600; letter-spacing: -0.015em;
 }
 @media (min-width: 768px) { .heading-2 { font-size: 2.5rem; letter-spacing: -0.02em; } }
 
@@ -93,6 +115,10 @@ body { background: #ffffff; }
   padding: 0.65rem 1.5rem; border-radius: 9999px; font-weight: 500; font-size: 0.9375rem;
   transition: opacity .15s ease, transform .15s ease, background-color .15s ease;
   white-space: nowrap;
+}
+/* Mobile: let long button labels wrap instead of overflowing the screen. */
+@media (max-width: 639px) {
+  .btn { white-space: normal; text-align: center; }
 }
 .btn:hover { opacity: 0.92; }
 .btn:active { transform: scale(0.98); }
@@ -172,6 +198,8 @@ body { background: #ffffff; }
   display: inline-flex; align-items: center; justify-content: center;
   width: 3rem; height: 3rem; border-radius: 14px; background: var(--ink); color: #fff;
 }
+/* Never let an icon tile get squeezed when the text beside it wraps. */
+.icon-tile { flex-shrink: 0; }
 .icon-tile-dark { background: rgba(255,255,255,0.1); color: var(--green); }
 
 .badge {
@@ -402,7 +430,7 @@ body { background: #ffffff; }
 
 /* Round 8: full-minimal hero -- bigger, bolder headline carries the section
    on its own now that the eyebrow badge and description paragraph are gone. */
-.hero-photo .heading-1 { font-size: 3.25rem; line-height: 1.08; }
+.hero-photo .heading-1 { font-size: clamp(2.25rem, 13vw, 3.25rem); line-height: 1.08; }
 @media (min-width: 768px) { .hero-photo .heading-1 { font-size: 5.5rem; letter-spacing: -0.025em; } }
 @media (min-width: 1280px) { .hero-photo .heading-1 { font-size: 6.25rem; } }
 
