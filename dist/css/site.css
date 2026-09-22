@@ -26,7 +26,15 @@
    Forcing the scrollbar gutter to always be present keeps that width
    constant across every page. */
 html { overflow-x: hidden; overflow-y: scroll; scrollbar-gutter: stable; }
-body { background: #ffffff; overflow-x: clip; }
+body { background: #ffffff; }
+/* Deliberately no overflow-x on body: setting overflow-x (even "clip") on
+   body is a known WebKit/Safari bug trigger that breaks `position: sticky`
+   on descendants after the page has been scrolled -- exactly the header's
+   own positioning (see .site-header / <header> below). That's what made
+   the mobile nav trigger scroll out of view instead of staying pinned,
+   requiring a scroll back to the top to reach it. `overflow-x: hidden` on
+   html alone (the actual root scroller) is enough to prevent horizontal
+   overflow/bleed sitewide without touching body's own overflow. */
 
 /* Belt-and-suspenders on top of the scrollbar-gutter rule above: some
    browser/OS combinations (notably macOS Chrome with the system "overlay"
@@ -40,7 +48,7 @@ body { background: #ffffff; overflow-x: clip; }
    --vp-width; the header locks its own width to that instead of the
    default 100%-of-body, so it renders at an identical pixel width on every
    page in the same browser window regardless of that page's own scrollbar
-   state. `overflow-x: hidden`/`clip` above keeps this safe on classic
+   state. `html`'s `overflow-x: hidden` above keeps this safe on classic
    (space-reserving) scrollbar systems, where the header can end up a
    scrollbar-width sliver wider than the visible content area. */
 .site-header { width: var(--vp-width, 100%); }

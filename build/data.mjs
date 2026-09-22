@@ -222,7 +222,7 @@ export const LEADERSHIP = [
   { slug: "greg-foster", name: "Greg Foster", title: "Co-Founder & Special Projects" },
   { slug: "kevin-legerski", name: "Kevin Legerski", title: "Co-Founder & Investor Relations" },
   { slug: "martha-paz", name: "Martha Paz", title: "Regional Manager" },
-  { slug: "blake-chandler", name: "Blake Chandler", title: "Property Manager" },
+  { slug: "blake-chandler", name: "Blake Chandler", title: "Portfolio Community Manager" },
 ];
 
 export const WHAT_WE_PROVIDE = [

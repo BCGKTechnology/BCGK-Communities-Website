@@ -6,12 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Community Guidelines | BCGK Communities</title>
   <meta name="description" content="Review BCGK Communities resident guidelines covering pools, pets, parking, trash, and community conduct." />
+  <link rel="canonical" href="https://bcgk-communities-website.vercel.app/community-guidelines.html" />
   <meta property="og:title" content="Community Guidelines | BCGK Communities" />
   <meta property="og:description" content="Review BCGK Communities resident guidelines covering pools, pets, parking, trash, and community conduct." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="images/logo/social-thumbnail.png" />
+  <meta property="og:url" content="https://bcgk-communities-website.vercel.app/community-guidelines.html" />
+  <meta property="og:image" content="https://bcgk-communities-website.vercel.app/images/logo/social-thumbnail.png" />
+  <meta property="og:image:width" content="3840" />
+  <meta property="og:image:height" content="2160" />
+  <meta property="og:site_name" content="BCGK Communities" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="images/logo/social-thumbnail.png" />
+  <meta name="twitter:image" content="https://bcgk-communities-website.vercel.app/images/logo/social-thumbnail.png" />
   <link rel="icon" href="images/logo/logo-square.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -92,18 +97,29 @@
         </button>
       </div>
     </div>
+  </header>
 
-    <div id="mobile-nav" class="mobile-nav" aria-hidden="true">
-      <div class="mobile-nav-inner">
-        <div class="flex items-center justify-between mb-6">
-          <img src="images/logo/primary-logo.png" alt="BCGK Communities" class="h-9 w-auto rounded-lg" />
-          <button type="button" id="mobile-nav-close" class="btn-icon">
-            <span class="sr-only">Close menu</span>
-            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>
-          </button>
-        </div>
-        <nav aria-label="Mobile" class="flex flex-col gap-1">
-          <a href="index.html" class="mobile-nav-link">Home</a>
+  <!-- The drawer + backdrop live OUTSIDE <header> on purpose: <header> has
+       Tailwind's backdrop-blur (backdrop-filter), and any ancestor with a
+       backdrop-filter/filter/transform/perspective/contain establishes a new
+       containing block for position:fixed descendants. With these nested
+       inside header, they were being positioned relative to header's box
+       instead of the viewport -- which is exactly what made the mobile menu
+       render off-screen (at the top of the *document*, not the viewport)
+       once the page had been scrolled, forcing a scroll back to the top to
+       reach it. Keeping them as siblings of <header> makes their
+       position:fixed resolve against the real viewport, as intended. -->
+  <div id="mobile-nav" class="mobile-nav" aria-hidden="true">
+    <div class="mobile-nav-inner">
+      <div class="flex items-center justify-between mb-6">
+        <img src="images/logo/primary-logo.png" alt="BCGK Communities" class="h-9 w-auto rounded-lg" />
+        <button type="button" id="mobile-nav-close" class="btn-icon">
+          <span class="sr-only">Close menu</span>
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>
+        </button>
+      </div>
+      <nav aria-label="Mobile" class="flex flex-col gap-1">
+        <a href="index.html" class="mobile-nav-link">Home</a>
     <details class="mobile-accordion">
       <summary class="mobile-nav-link justify-between">About Us <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5.5 8.5 6.5 7 6.5-7"/></svg></summary>
       <div class="pl-4 flex flex-col">
@@ -128,15 +144,14 @@
         <a href="resident-portal.html" class="mobile-nav-link text-base">Resident Portal</a><a href="community-guidelines.html" class="mobile-nav-link text-base">Community Guidelines</a><a href="avoiding-rental-scams.html" class="mobile-nav-link text-base">Avoiding Rental Scams</a>
       </div>
     </details><a href="contact-us.html" class="mobile-nav-link">Contact</a>
-        </nav>
-        <div class="mt-6 pt-6 border-t border-ink/10 flex flex-col gap-3">
-          <a href="tel:+19165000807" class="nav-link"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 4h3l1.3 4.2-2 1.6a12.5 12.5 0 0 0 5.4 5.4l1.6-2L20 14.5v3a1.7 1.7 0 0 1-1.9 1.7A16 16 0 0 1 4.8 5.9 1.7 1.7 0 0 1 6.5 4Z"/></svg> <span>(916) 500-0807</span></a>
-          <a href="hire-us.html" class="btn btn-primary w-full justify-center">Hire Us</a>
-        </div>
+      </nav>
+      <div class="mt-6 pt-6 border-t border-ink/10 flex flex-col gap-3">
+        <a href="tel:+19165000807" class="nav-link"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 4h3l1.3 4.2-2 1.6a12.5 12.5 0 0 0 5.4 5.4l1.6-2L20 14.5v3a1.7 1.7 0 0 1-1.9 1.7A16 16 0 0 1 4.8 5.9 1.7 1.7 0 0 1 6.5 4Z"/></svg> <span>(916) 500-0807</span></a>
+        <a href="hire-us.html" class="btn btn-primary w-full justify-center">Hire Us</a>
       </div>
     </div>
-    <div id="mobile-nav-backdrop" class="mobile-nav-backdrop" aria-hidden="true"></div>
-  </header>
+  </div>
+  <div id="mobile-nav-backdrop" class="mobile-nav-backdrop" aria-hidden="true"></div>
   <main id="main-content">
     
   <nav aria-label="Breadcrumb" class="max-w-site mx-auto px-6 md:px-8 pt-6">

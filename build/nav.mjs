@@ -1,5 +1,12 @@
 // Shared navigation + footer link data for BCGK Communities site
 
+// The live production domain. Social/messaging link-preview crawlers
+// (iMessage, Slack, Facebook, etc.) need a fully-qualified, absolute URL
+// for og:image and og:url -- a relative path silently fails to produce a
+// thumbnail in most of them. UPDATE THIS the moment a different domain
+// (e.g. a custom bcgkcommunities.com domain) becomes the live one.
+export const SITE_URL = "https://bcgk-communities-website.vercel.app";
+
 export const PHONE_DISPLAY = "(916) 500-0807";
 export const PHONE_HREF = "tel:+19165000807";
 export const EMAIL_GENERAL = "customerservice@bcgkcommunities.com";

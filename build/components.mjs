@@ -59,27 +59,37 @@ export function Header(current, { animateLogo = false } = {}) {
         </button>
       </div>
     </div>
+  </header>
 
-    <div id="mobile-nav" class="mobile-nav" aria-hidden="true">
-      <div class="mobile-nav-inner">
-        <div class="flex items-center justify-between mb-6">
-          <img src="images/logo/primary-logo.png" alt="BCGK Communities" class="h-9 w-auto rounded-lg" />
-          <button type="button" id="mobile-nav-close" class="btn-icon">
-            <span class="sr-only">Close menu</span>
-            ${icon("x", "w-6 h-6")}
-          </button>
-        </div>
-        <nav aria-label="Mobile" class="flex flex-col gap-1">
-          ${NAV.map((item) => mobileNavItem(item)).join("")}
-        </nav>
-        <div class="mt-6 pt-6 border-t border-ink/10 flex flex-col gap-3">
-          <a href="${PHONE_HREF}" class="nav-link">${icon("phone", "w-4 h-4")} <span>${PHONE_DISPLAY}</span></a>
-          <a href="hire-us.html" class="btn btn-primary w-full justify-center">Hire Us</a>
-        </div>
+  <!-- The drawer + backdrop live OUTSIDE <header> on purpose: <header> has
+       Tailwind's backdrop-blur (backdrop-filter), and any ancestor with a
+       backdrop-filter/filter/transform/perspective/contain establishes a new
+       containing block for position:fixed descendants. With these nested
+       inside header, they were being positioned relative to header's box
+       instead of the viewport -- which is exactly what made the mobile menu
+       render off-screen (at the top of the *document*, not the viewport)
+       once the page had been scrolled, forcing a scroll back to the top to
+       reach it. Keeping them as siblings of <header> makes their
+       position:fixed resolve against the real viewport, as intended. -->
+  <div id="mobile-nav" class="mobile-nav" aria-hidden="true">
+    <div class="mobile-nav-inner">
+      <div class="flex items-center justify-between mb-6">
+        <img src="images/logo/primary-logo.png" alt="BCGK Communities" class="h-9 w-auto rounded-lg" />
+        <button type="button" id="mobile-nav-close" class="btn-icon">
+          <span class="sr-only">Close menu</span>
+          ${icon("x", "w-6 h-6")}
+        </button>
+      </div>
+      <nav aria-label="Mobile" class="flex flex-col gap-1">
+        ${NAV.map((item) => mobileNavItem(item)).join("")}
+      </nav>
+      <div class="mt-6 pt-6 border-t border-ink/10 flex flex-col gap-3">
+        <a href="${PHONE_HREF}" class="nav-link">${icon("phone", "w-4 h-4")} <span>${PHONE_DISPLAY}</span></a>
+        <a href="hire-us.html" class="btn btn-primary w-full justify-center">Hire Us</a>
       </div>
     </div>
-    <div id="mobile-nav-backdrop" class="mobile-nav-backdrop" aria-hidden="true"></div>
-  </header>`;
+  </div>
+  <div id="mobile-nav-backdrop" class="mobile-nav-backdrop" aria-hidden="true"></div>`;
 }
 
 function mobileNavItem(item) {

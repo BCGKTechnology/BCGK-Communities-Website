@@ -67,7 +67,7 @@ fs.mkdirSync(DIST, { recursive: true });
 
 let count = 0;
 for (const p of pages) {
-  const html = page({ title: p.title, description: p.description, path: p.path, content: p.content });
+  const html = page({ title: p.title, description: p.description, path: p.path, file: p.file, content: p.content });
   fs.writeFileSync(path.join(DIST, p.file), html, "utf8");
   count++;
 }
