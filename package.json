@@ -1,0 +1,11 @@
+{
+  "name": "bcgk-communities-website",
+  "private": true,
+  "description": "BCGK Communities marketing site -- static HTML/CSS/JS build (custom Node SSG) with a Vercel serverless function for the Postmark-backed contact form.",
+  "scripts": {
+    "build": "node build/build.mjs && tailwindcss -i ./build/tailwind-input.css -o ./dist/css/tailwind.css -c ./tailwind.config.js --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
+}

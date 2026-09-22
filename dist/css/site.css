@@ -1,0 +1,461 @@
+/* BCGK Communities -- design-system CSS layer (component classes on top of Tailwind utilities) */
+/* Round 6: re-based on Design-MD/mongodb/DESIGN.md -- forest-teal-black dark
+   sections (rather than near-pure-black), teal-tinted shadows/borders on light
+   surfaces, a serif display face for hero headings, and a monospace uppercase
+   treatment for eyebrow/label text. BCGK's own logo green (#12EB7F) stays the
+   sole accent (kept over the reference doc's neon #00ed64), and the earlier
+   "no radius / straight edges" rule (see the override block near the bottom
+   of this file) stays in force -- both per Chuck's explicit direction, so the
+   pill-button / heavily-rounded-card language from the reference doc was
+   intentionally NOT carried over. */
+
+:root {
+  --focus-color: #086939;
+  --ink: #001E2B; /* forest-teal-black -- dark sections + primary "ink" text/border color */
+  --green: #12EB7F; /* BCGK's own brand green, sampled from the logo -- kept over the reference's neon green */
+}
+
+* { scroll-behavior: smooth; }
+
+/* Always reserve the vertical scrollbar's space, even on pages short enough
+   not to need one. Without this, a page whose content is taller than the
+   viewport gets a scrollbar that eats into the content width, while a
+   shorter page (no scrollbar) renders full-width -- so every centered,
+   fixed-width element (nav, header, page content) shifts sideways by the
+   scrollbar's width when navigating between a "tall" and a "short" page.
+   Forcing the scrollbar gutter to always be present keeps that width
+   constant across every page. */
+html { overflow-x: hidden; overflow-y: scroll; scrollbar-gutter: stable; }
+body { background: #ffffff; overflow-x: clip; }
+
+/* Belt-and-suspenders on top of the scrollbar-gutter rule above: some
+   browser/OS combinations (notably macOS Chrome with the system "overlay"
+   scrollbar style used by trackpad users) don't reserve `scrollbar-gutter`
+   space consistently on every page, so the header's available width can
+   still end up a few pixels narrower on a page that happens to need a real
+   scrollbar than on one that doesn't -- shifting the whole nav sideways.
+   A tiny blocking inline script in <head> (see lib.mjs) measures the true
+   browser window width (window.innerWidth, which is unaffected by any
+   per-page scrollbar behavior) before first paint and stores it in
+   --vp-width; the header locks its own width to that instead of the
+   default 100%-of-body, so it renders at an identical pixel width on every
+   page in the same browser window regardless of that page's own scrollbar
+   state. `overflow-x: hidden`/`clip` above keeps this safe on classic
+   (space-reserving) scrollbar systems, where the header can end up a
+   scrollbar-width sliver wider than the visible content area. */
+.site-header { width: var(--vp-width, 100%); }
+
+/* ---------------- Typography scale (from DESIGN.md) ---------------- */
+
+.heading-1 {
+  font-family: 'Fraunces', Georgia, ui-serif, serif;
+  font-size: 2.75rem; line-height: 1.12; font-weight: 500; letter-spacing: -0.015em;
+}
+@media (min-width: 768px) { .heading-1 { font-size: 4.25rem; letter-spacing: -0.02em; } }
+
+.heading-2 {
+  font-size: 1.875rem; line-height: 1.15; font-weight: 600; letter-spacing: -0.015em;
+}
+@media (min-width: 768px) { .heading-2 { font-size: 2.5rem; letter-spacing: -0.02em; } }
+
+.heading-3 { font-size: 1.5rem; line-height: 1.25; font-weight: 500; letter-spacing: -0.006em; }
+.heading-4 { font-size: 1.25rem; line-height: 1.3; font-weight: 600; letter-spacing: -0.005em; }
+
+.body-lg { font-size: 1.125rem; line-height: 1.6; }
+.body-base { font-size: 1rem; line-height: 1.6; }
+
+.eyebrow {
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em;
+}
+
+/* ---------------- Layout helpers ---------------- */
+
+.section { padding-top: 4rem; padding-bottom: 4rem; }
+@media (min-width: 768px) { .section { padding-top: 6rem; padding-bottom: 6rem; } }
+
+.section-tight { padding-top: 3rem; padding-bottom: 3rem; }
+
+.on-dark { --focus-color: #12EB7F; }
+
+/* ---------------- Buttons ---------------- */
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.65rem 1.5rem; border-radius: 9999px; font-weight: 500; font-size: 0.9375rem;
+  transition: opacity .15s ease, transform .15s ease, background-color .15s ease;
+  white-space: nowrap;
+}
+.btn:hover { opacity: 0.92; }
+.btn:active { transform: scale(0.98); }
+
+.btn-primary { background: var(--ink); color: #fff; box-shadow: 0 1px 2px rgba(0,30,43,0.15); }
+.btn-accent { background: var(--green); color: var(--ink); font-weight: 600; }
+.btn-secondary { background: #fff; color: var(--ink); border: 1px solid rgba(0,30,43,0.12); }
+.btn-secondary:hover { background: #FAFAFA; opacity: 1; border-color: rgba(0,30,43,0.2); }
+.btn-ghost-dark { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.25); }
+.btn-ghost-dark:hover { background: rgba(255,255,255,0.08); opacity: 1; }
+
+.btn-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.5rem; height: 2.5rem; border-radius: 9999px; color: var(--ink);
+}
+.btn-icon:hover { background: #F5F5F5; }
+
+/* ---------------- Navigation ---------------- */
+
+.nav-link {
+  display: inline-flex; align-items: center; gap: 0.3rem; white-space: nowrap;
+  font-size: 0.9rem; font-weight: 500; color: rgba(0,30,43,0.85);
+  padding: 0.55rem 0.7rem; border-radius: 9999px; line-height: 1;
+}
+.nav-item.nav-link, button.nav-link { padding: 0.55rem 0.7rem; }
+.nav-link:hover { color: #086939; background: rgba(18,235,127,0.1); }
+.nav-caret { transition: transform .2s ease; }
+.group:hover .nav-caret, .group.open .nav-caret { transform: rotate(180deg); }
+
+.dropdown-panel {
+  position: absolute; top: calc(100% + 0.5rem); left: 50%; transform: translateX(-50%) translateY(4px);
+  width: max-content; min-width: 14rem; background: #fff; border: 1px solid rgba(0,30,43,0.06); border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0,30,43,0.10); padding: 0.5rem; opacity: 0; pointer-events: none;
+  transition: opacity .15s ease, transform .15s ease; z-index: 60;
+}
+.group:hover .dropdown-panel,
+.group:focus-within .dropdown-panel,
+.group.open .dropdown-panel {
+  opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0);
+}
+.dropdown-item {
+  display: block; padding: 0.6rem 0.85rem; border-radius: 10px; font-size: 0.9rem; color: var(--ink);
+}
+.dropdown-item:hover { background: #F5F5F5; color: #086939; }
+
+/* Mobile nav */
+.mobile-nav {
+  position: fixed; top: 0; right: 0; height: 100dvh; width: min(22rem, 88vw);
+  background: #fff; z-index: 90; transform: translateX(100%); transition: transform .25s ease, visibility .25s;
+  overflow-y: auto; box-shadow: -8px 0 32px rgba(0,30,43,0.12); visibility: hidden;
+}
+.mobile-nav.open { transform: translateX(0); visibility: visible; }
+.mobile-nav-inner { padding: 1.5rem; }
+.mobile-nav-backdrop {
+  position: fixed; inset: 0; background: rgba(0,30,43,0.4); z-index: 80;
+  opacity: 0; pointer-events: none; transition: opacity .25s ease;
+}
+.mobile-nav-backdrop.open { opacity: 1; pointer-events: auto; }
+.mobile-nav-link {
+  display: flex; align-items: center; gap: 0.5rem; padding: 0.85rem 0.5rem; font-size: 1.0625rem;
+  font-weight: 500; color: var(--ink); border-bottom: 1px solid #F0F0F0;
+}
+.mobile-accordion summary { list-style: none; cursor: pointer; }
+.mobile-accordion summary::-webkit-details-marker { display: none; }
+.mobile-accordion[open] summary .lucide-chevron-down { transform: rotate(180deg); }
+
+/* ---------------- Cards ---------------- */
+
+.card {
+  background: #fff; border: 1px solid rgba(0,30,43,0.06); border-radius: 20px; padding: 1.75rem;
+  box-shadow: 0 2px 4px rgba(0,30,43,0.03);
+}
+.card-hover { transition: border-color .2s ease, transform .2s ease; }
+.card-hover:hover { border-color: rgba(0,30,43,0.14); transform: translateY(-2px); }
+
+.icon-tile {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 3rem; height: 3rem; border-radius: 14px; background: var(--ink); color: #fff;
+}
+.icon-tile-dark { background: rgba(255,255,255,0.1); color: var(--green); }
+
+.badge {
+  display: inline-flex; align-items: center; padding: 0.3rem 0.75rem; border-radius: 9999px;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase;
+}
+
+.stat-tile { padding: 1.5rem 1rem; text-align: center; border-left: 1px solid rgba(0,30,43,0.08); }
+.stat-tile:first-child { border-left: none; }
+.stat-tile-dark { border-left-color: rgba(255,255,255,0.12); }
+.stat-value { font-size: 2.25rem; font-weight: 600; letter-spacing: -0.02em; }
+.stat-label { font-size: 0.8125rem; margin-top: 0.35rem; }
+
+/* Property cards */
+.property-card {
+  display: block; background: #fff; border: 1px solid rgba(0,30,43,0.06); border-radius: 20px;
+  overflow: hidden; box-shadow: 0 2px 4px rgba(0,30,43,0.03); transition: transform .2s ease, border-color .2s ease;
+}
+.property-card:hover { transform: translateY(-3px); border-color: rgba(0,30,43,0.15); }
+.property-card-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #F0F0F0; }
+.property-card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+.property-card:hover .property-card-media img { transform: scale(1.05); }
+.property-card-tag {
+  position: absolute; top: 0.85rem; right: 0.85rem; background: rgba(0,30,43,0.85); color: #fff;
+  font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.65rem; border-radius: 9999px;
+}
+
+/* Event cards */
+.event-card {
+  display: flex; align-items: center; gap: 1rem; background: #fff; border: 1px solid rgba(0,30,43,0.06);
+  border-radius: 16px; padding: 1rem 1.25rem; transition: border-color .15s ease, transform .15s ease;
+}
+.event-card:hover { border-color: #12EB7F; transform: translateX(2px); }
+.event-date {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 3.5rem; height: 3.5rem; border-radius: 12px; background: var(--ink); color: #fff; flex-shrink: 0;
+}
+.event-month { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.05em; color: var(--green); }
+.event-day { font-size: 1.25rem; font-weight: 700; line-height: 1; }
+
+/* ---------------- Accordion / FAQ ---------------- */
+
+.accordion-item { border: 1px solid rgba(0,30,43,0.08); border-radius: 16px; padding: 0; overflow: hidden; }
+.accordion-trigger {
+  list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+  padding: 1.1rem 1.35rem; font-weight: 600; font-size: 1rem;
+}
+.accordion-trigger::-webkit-details-marker { display: none; }
+.accordion-item[open] .accordion-icon { transform: rotate(45deg); }
+.accordion-icon { transition: transform .2s ease; flex-shrink: 0; }
+.accordion-body { padding: 0 1.35rem 1.25rem; }
+
+/* ---------------- Forms ---------------- */
+
+.form-card { background: #fff; border: 1px solid rgba(0,30,43,0.07); border-radius: 24px; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,30,43,0.03); }
+.field { display: flex; flex-direction: column; gap: 0.4rem; }
+.field label { font-size: 0.875rem; font-weight: 500; color: var(--ink); }
+.field .req { color: #086939; }
+.field .optional { color: #888; font-weight: 400; }
+.field input, .field select, .field textarea {
+  border: 1px solid rgba(0,30,43,0.14); border-radius: 12px; padding: 0.65rem 0.9rem; font-size: 0.9375rem;
+  background: #fff; color: var(--ink); font-family: inherit;
+}
+.field input::placeholder, .field textarea::placeholder { color: #999; }
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none; border-color: #12EB7F; box-shadow: 0 0 0 3px rgba(18,235,127,0.25);
+}
+.form-note { font-size: 0.8125rem; color: #888; margin-top: 0.9rem; }
+.form-success {
+  display: none; align-items: center; gap: 0.6rem; margin-top: 0.9rem; padding: 0.85rem 1rem;
+  background: #E2FCEF; color: #086939; border-radius: 12px; font-size: 0.9rem; font-weight: 500;
+}
+.form-success.show { display: flex; }
+.form-error {
+  display: none; align-items: center; gap: 0.6rem; margin-top: 0.9rem; padding: 0.85rem 1rem;
+  background: #FDEDEC; color: #9B2C2C; border-radius: 12px; font-size: 0.9rem; font-weight: 500;
+}
+.form-error.show { display: flex; }
+.btn[disabled] { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
+
+/* ---------------- Modal ---------------- */
+
+.modal { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; padding: 1.25rem; }
+.modal.open { display: flex; }
+.modal-backdrop { position: absolute; inset: 0; background: rgba(0,30,43,0.55); }
+.modal-panel {
+  position: relative; background: #fff; border-radius: 24px; max-width: 32rem; width: 100%;
+  max-height: 85vh; overflow-y: auto; padding: 2rem; box-shadow: 0 24px 64px rgba(0,30,43,0.3);
+}
+
+/* ---------------- Hero atmosphere ---------------- */
+
+.hero-gradient {
+  background: radial-gradient(120% 100% at 50% -10%, rgba(18,235,127,0.16) 0%, rgba(18,235,127,0.05) 35%, rgba(255,255,255,0) 70%);
+}
+.hero-gradient-dark {
+  background: radial-gradient(120% 100% at 50% -10%, rgba(18,235,127,0.22) 0%, rgba(18,235,127,0.06) 40%, rgba(0,30,43,0) 75%);
+}
+
+/* ---------------- Calendar (Upcoming Events) ---------------- */
+
+.calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0,1fr)); gap: 0.4rem; }
+.calendar-weekday { text-align: center; font-size: 0.6875rem; font-weight: 600; color: #888; text-transform: uppercase; padding-bottom: 0.4rem; }
+.calendar-cell {
+  min-height: 5.5rem; border: 1px solid rgba(0,30,43,0.07); border-radius: 12px; padding: 0.4rem;
+  display: flex; flex-direction: column; gap: 0.25rem; background: #fff;
+}
+.calendar-cell.is-outside { background: #FAFAFA; color: #bbb; }
+.calendar-date { font-size: 0.75rem; font-weight: 600; color: #666; }
+.calendar-event {
+  font-size: 0.6875rem; line-height: 1.25; background: #E2FCEF; color: #086939; border-radius: 6px;
+  padding: 0.2rem 0.35rem; text-align: left; font-weight: 500;
+}
+.calendar-event:hover { background: #12EB7F; color: #001E2B; }
+@media (max-width: 767px) {
+  .calendar-grid { grid-template-columns: repeat(7, minmax(0,1fr)); gap: 0.2rem; }
+  .calendar-cell { min-height: 3.75rem; padding: 0.25rem; }
+  .calendar-event { display: none; }
+  .calendar-cell.has-event { position: relative; }
+  .calendar-cell.has-event::after {
+    content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);
+    width: 5px; height: 5px; border-radius: 9999px; background: #12EB7F;
+  }
+}
+
+/* ---------------- Filters / tabs ---------------- */
+
+.filter-pill {
+  padding: 0.5rem 1.1rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 500;
+  border: 1px solid rgba(0,30,43,0.12); color: #333; background: #fff; transition: all .15s ease;
+}
+.filter-pill[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+.view-toggle { display: inline-flex; background: #F5F5F5; border-radius: 9999px; padding: 0.25rem; }
+.view-toggle-btn { padding: 0.45rem 1rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 500; color: #666; }
+.view-toggle-btn[aria-pressed="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,30,43,0.1); }
+
+/* ---------------- Legal / prose pages ---------------- */
+
+.prose-legal h2 { font-size: 1.375rem; font-weight: 600; margin-top: 2.25rem; margin-bottom: 0.75rem; letter-spacing: -0.01em; }
+.prose-legal p { color: #333; line-height: 1.7; margin-bottom: 1rem; }
+.prose-legal ul { list-style: disc; padding-left: 1.5rem; color: #333; line-height: 1.7; margin-bottom: 1rem; }
+.prose-legal li { margin-bottom: 0.4rem; }
+.prose-legal strong { color: var(--ink); }
+.prose-legal a { color: #086939; text-decoration: underline; text-underline-offset: 2px; }
+
+/* ---------------- Footer links ---------------- */
+.footer-link { color: rgba(255,255,255,0.65); }
+.footer-link:hover { color: #12EB7F; }
+
+/* ---------------- Accessibility ---------------- */
+
+.skip-link {
+  position: absolute; left: -9999px; top: 0; background: #12EB7F; color: #001E2B; padding: 0.75rem 1.25rem;
+  border-radius: 0 0 12px 0; font-weight: 600; z-index: 200;
+}
+.skip-link:focus { left: 0; }
+
+:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}
+
+/* ---------------- Scroll-triggered section transitions ---------------- */
+/* Gated behind .js-reveal (added by an inline head script) so content is fully
+   visible with no JS, with prefers-reduced-motion, and if this CSS fails to load. */
+
+.js-reveal .reveal-section {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity .8s cubic-bezier(.16,.84,.44,1), transform .8s cubic-bezier(.16,.84,.44,1);
+}
+.js-reveal .reveal-section.is-visible { opacity: 1; transform: none; }
+
+/* Stagger direct grid children (cards, stat tiles, property/event cards, columns).
+   Elements that need to keep their own rotation (e.g. .polaroid) set --tilt inline;
+   it defaults to 0deg so ordinary grid items are unaffected. */
+.js-reveal .reveal-section .grid > * {
+  opacity: 0;
+  transform: translateY(22px) rotate(var(--tilt, 0deg));
+  transition: opacity .6s ease, transform .6s ease;
+}
+.js-reveal .reveal-section.is-visible .grid > * { opacity: 1; transform: translateY(0) rotate(var(--tilt, 0deg)); }
+.js-reveal .reveal-section.is-visible .grid > *:nth-child(1) { transition-delay: .05s; }
+.js-reveal .reveal-section.is-visible .grid > *:nth-child(2) { transition-delay: .1s; }
+.js-reveal .reveal-section.is-visible .grid > *:nth-child(3) { transition-delay: .15s; }
+.js-reveal .reveal-section.is-visible .grid > *:nth-child(4) { transition-delay: .2s; }
+.js-reveal .reveal-section.is-visible .grid > *:nth-child(5) { transition-delay: .25s; }
+.js-reveal .reveal-section.is-visible .grid > *:nth-child(6) { transition-delay: .3s; }
+.js-reveal .reveal-section.is-visible .grid > *:nth-child(n+7) { transition-delay: .35s; }
+
+/* ---------------- Home page personality ---------------- */
+
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: scale(0.98); }
+
+.icon-tile { transition: transform .25s ease; }
+.card-hover:hover .icon-tile { transform: rotate(-6deg) scale(1.06); }
+
+/* ---------------- Home hero (photographic) ---------------- */
+
+.hero-photo {
+  position: relative; overflow: hidden; color: #fff;
+  min-height: 560px;
+}
+.hero-photo .hero-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 35%;
+  opacity: 0; transition: opacity 1.8s ease-in-out;
+}
+/* The first slide is marked is-active directly in the markup so it shows
+   with no JS/motion at all; site.js cycles this class among the slides
+   when there's more than one and the visitor hasn't asked for reduced
+   motion (see the hero slideshow block in site.js). */
+.hero-photo .hero-bg.is-active { opacity: 1; }
+.hero-photo::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,30,43,0.12) 0%, rgba(0,30,43,0.42) 55%, rgba(0,30,43,0.92) 100%);
+}
+.hero-photo .hero-content { position: relative; z-index: 2; min-height: 560px; }
+@media (min-width: 768px) {
+  .hero-photo, .hero-photo .hero-content { min-height: 46rem; }
+}
+
+/* Round 8: full-minimal hero -- bigger, bolder headline carries the section
+   on its own now that the eyebrow badge and description paragraph are gone. */
+.hero-photo .heading-1 { font-size: 3.25rem; line-height: 1.08; }
+@media (min-width: 768px) { .hero-photo .heading-1 { font-size: 5.5rem; letter-spacing: -0.025em; } }
+@media (min-width: 1280px) { .hero-photo .heading-1 { font-size: 6.25rem; } }
+
+.hero-feature-card {
+  display: inline-flex; align-items: center; gap: 0.85rem; width: fit-content;
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.28);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border-radius: 16px; padding: 0.6rem 1.15rem 0.6rem 0.6rem;
+  transition: background-color .2s ease, transform .2s ease;
+}
+.hero-feature-card:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+.hero-feature-card img { width: 3rem; height: 3rem; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
+.hero-feature-eyebrow { display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.7); }
+.hero-feature-name { display: block; font-size: 0.9375rem; font-weight: 600; color: #fff; margin-top: 0.1rem; }
+
+.marquee-wrap {
+  position: relative; overflow: hidden; background: var(--ink);
+}
+/* Fade the scrolling text into the ticker's own dark background at each edge
+   (rather than a CSS mask, which would make the wrap transparent there and
+   let the white page background show through instead). */
+.marquee-wrap::before,
+.marquee-wrap::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 8%; z-index: 2; pointer-events: none;
+}
+.marquee-wrap::before { left: 0; background: linear-gradient(90deg, var(--ink) 0%, rgba(0,30,43,0) 100%); }
+.marquee-wrap::after { right: 0; background: linear-gradient(270deg, var(--ink) 0%, rgba(0,30,43,0) 100%); }
+.marquee-track { display: flex; width: max-content; animation: marquee-scroll 30s linear infinite; }
+.marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+@keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee-item {
+  display: inline-flex; align-items: center; gap: 0.6rem; white-space: nowrap;
+  padding: 0 1.75rem; font-size: 1rem; font-weight: 600; letter-spacing: 0.02em; color: rgba(255,255,255,0.88);
+}
+.marquee-item .dot { width: 5px; height: 5px; border-radius: 9999px; background: var(--green); flex-shrink: 0; }
+
+.polaroid {
+  background: #fff; padding: 0.55rem 0.55rem 1rem; border-radius: 6px;
+  box-shadow: 0 12px 28px rgba(0,30,43,0.14); transition: transform .3s ease, box-shadow .3s ease;
+  transform: rotate(var(--tilt, 0deg));
+}
+.polaroid img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 2px; }
+.polaroid figcaption { text-align: center; font-size: 0.75rem; font-weight: 600; color: #444; margin-top: 0.55rem; }
+.polaroid:hover { transform: translateY(-6px) rotate(0deg) !important; box-shadow: 0 22px 44px rgba(0,30,43,0.2); z-index: 6; }
+
+/* ---------------- Straight-edge design update ---------------- */
+/* Chuck: "no radius, I want straight edge for images, containers and the
+   logo." Overriding every rounded corner in one place -- Tailwind's
+   rounded-* utilities plus our own component radii -- rather than hunting
+   down each occurrence across every page file. !important is deliberate:
+   site.css already loads after tailwind.css, but utility classes are used
+   inline all over the markup and this needs to win unconditionally. */
+img,
+.rounded, .rounded-sm, .rounded-md, .rounded-lg, .rounded-xl, .rounded-xl2, .rounded-2xl, .rounded-3xl, .rounded-full,
+.card, .btn, .btn-icon, .badge, .icon-tile,
+.property-card, .property-card-media, .property-card-tag,
+.event-card, .event-date, .accordion-item,
+.form-card, .field input, .field select, .field textarea, .form-success, .form-error,
+.modal-panel, .filter-pill, .view-toggle, .view-toggle-btn,
+.dropdown-panel, .dropdown-item, .hero-feature-card, .hero-feature-card img,
+.polaroid, .polaroid img, .calendar-cell, .calendar-event,
+.marquee-item .dot, .skip-link {
+  border-radius: 0 !important;
+}
