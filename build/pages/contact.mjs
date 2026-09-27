@@ -1,5 +1,5 @@
 import { icon } from "../lib.mjs";
-import { Header, Footer, Breadcrumbs, Eyebrow, ContactForm } from "../components.mjs";
+import { Header, Footer, Breadcrumbs, Eyebrow, ContactForm, OfficeList } from "../components.mjs";
 import { EMAIL_GENERAL, PHONE_DISPLAY, PHONE_HREF } from "../nav.mjs";
 
 export function ContactUsPage() {
@@ -24,6 +24,7 @@ export function ContactUsPage() {
               <span class="icon-tile">${icon("mail", "w-5 h-5")}</span>
               <div class="min-w-0"><p class="text-sm text-gray-500">Email our team</p><a href="mailto:${EMAIL_GENERAL}" class="font-semibold text-ink">${EMAIL_GENERAL}</a></div>
             </div>
+            ${OfficeList()}
           </div>
         </div>
         <div>${ContactForm({ id: "contact-us-form" })}</div>

@@ -1,5 +1,5 @@
 import { icon } from "./lib.mjs";
-import { NAV, FOOTER_COLUMNS, PHONE_DISPLAY, PHONE_HREF, EMAIL_GENERAL } from "./nav.mjs";
+import { NAV, FOOTER_COLUMNS, PHONE_DISPLAY, PHONE_HREF, EMAIL_GENERAL, OFFICES } from "./nav.mjs";
 
 /* ---------------------------------------------------------------- */
 /* Header / Navigation                                               */
@@ -120,6 +120,18 @@ export function Footer() {
           <div class="mt-5 flex flex-col gap-2 text-sm">
             <a href="${PHONE_HREF}" class="footer-link inline-flex items-center gap-2">${icon("phone", "w-4 h-4")} ${PHONE_DISPLAY}</a>
             <a href="mailto:${EMAIL_GENERAL}" class="footer-link inline-flex items-center gap-2">${icon("mail", "w-4 h-4")} ${EMAIL_GENERAL}</a>
+          </div>
+          <div class="mt-6 flex flex-col gap-4 text-sm">
+            ${OFFICES.map(
+              (o) => `
+            <address class="not-italic flex items-start gap-2">
+              <span class="shrink-0 mt-[3px] text-brand-green">${icon("map-pin", "w-4 h-4")}</span>
+              <span class="min-w-0">
+                <span class="block font-semibold text-white">${o.name}</span>
+                <a href="${o.mapUrl}" target="_blank" rel="noopener" class="footer-link">${o.lines.join("<br />")}</a>
+              </span>
+            </address>`
+            ).join("")}
           </div>
         </div>
         ${FOOTER_COLUMNS.map(
@@ -381,4 +393,21 @@ export function Modal({ id }) {
       <div data-modal-content></div>
     </div>
   </div>`;
+}
+
+/* ---------------------------------------------------------------- */
+/* Office addresses (Contact Us page)                                 */
+/* ---------------------------------------------------------------- */
+
+export function OfficeList() {
+  return OFFICES.map(
+    (o) => `
+            <div class="flex items-center gap-3">
+              <span class="icon-tile">${icon("map-pin", "w-5 h-5")}</span>
+              <address class="not-italic min-w-0">
+                <p class="text-sm text-gray-500">${o.name}</p>
+                <a href="${o.mapUrl}" target="_blank" rel="noopener" class="font-semibold text-ink hover:underline">${o.lines.join("<br />")}</a>
+              </address>
+            </div>`
+  ).join("");
 }

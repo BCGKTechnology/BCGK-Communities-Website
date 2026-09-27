@@ -7,6 +7,21 @@
 // (e.g. a custom bcgkcommunities.com domain) becomes the live one.
 export const SITE_URL = "https://bcgkcommunities.com";
 
+// Office addresses -- shown in the footer (every page) and on Contact Us.
+// Each links to a Google Maps search for that exact address.
+export const OFFICES = [
+  {
+    name: "Sacramento Office",
+    lines: ["1201 J Street", "Sacramento, CA 95814"],
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=1201+J+Street%2C+Sacramento%2C+CA+95814",
+  },
+  {
+    name: "Los Angeles Office",
+    lines: ["9171 Wilshire Blvd, Suite 500", "Beverly Hills, CA 90210"],
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=9171+Wilshire+Blvd%2C+Suite+500%2C+Beverly+Hills%2C+CA+90210",
+  },
+];
+
 export const PHONE_DISPLAY = "(916) 500-0807";
 export const PHONE_HREF = "tel:+19165000807";
 export const EMAIL_GENERAL = "customerservice@bcgkcommunities.com";
