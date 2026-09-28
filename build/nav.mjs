@@ -22,6 +22,9 @@ export const OFFICES = [
   },
 ];
 
+// Google Analytics 4 measurement ID (loaded on every page via lib.mjs).
+export const GA_MEASUREMENT_ID = "G-FC802FQB61";
+
 export const PHONE_DISPLAY = "(916) 500-0807";
 export const PHONE_HREF = "tel:+19165000807";
 export const EMAIL_GENERAL = "customerservice@bcgkcommunities.com";

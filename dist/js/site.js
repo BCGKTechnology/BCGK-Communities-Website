@@ -270,6 +270,13 @@
           success.setAttribute("tabindex", "-1");
           success.focus();
           form.reset();
+          // GA4: count successful contact form submissions as leads
+          // (mark "generate_lead" as a key event in GA to use it as a conversion).
+          try {
+            if (typeof window.gtag === "function") {
+              window.gtag("event", "generate_lead", { form_id: form.id || "contact-form", page_path: location.pathname });
+            }
+          } catch (err) {}
         })
         .catch(function () {
           errorEl.textContent =

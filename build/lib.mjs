@@ -2,7 +2,7 @@
 // Self-contained build: real Tailwind CSS is compiled at build time (css/tailwind.css)
 // and icons are inlined SVG (build/icons.mjs) -- no CDN / network dependency to preview.
 
-import { SITE_URL } from "./nav.mjs";
+import { SITE_URL, GA_MEASUREMENT_ID } from "./nav.mjs";
 
 export { icon } from "./icons.mjs";
 
@@ -15,6 +15,9 @@ function headBlock({ title, fullTitle, description, ogImagePath, ogImageWidth, o
   const docTitle = fullTitle || `${title} | BCGK Communities`;
   return `
   <meta charset="UTF-8" />
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${docTitle}</title>
   <meta name="description" content="${description}" />
