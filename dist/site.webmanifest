@@ -1,0 +1,21 @@
+{
+  "name": "BCGK Communities",
+  "short_name": "BCGK",
+  "description": "BCGK Communities is a modern property management company built around operational excellence, high standards, and exceptional service.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#000000",
+  "theme_color": "#001E2B",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

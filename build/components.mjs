@@ -116,7 +116,7 @@ export function Footer() {
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10">
         <div class="col-span-2 lg:col-span-2">
           <img src="images/logo/primary-logo.png" alt="BCGK Communities" class="h-10 w-auto rounded-lg mb-4" />
-          <p class="text-white/60 text-sm leading-relaxed max-w-xs">Communities built to thrive &mdash; operational excellence, modern technology, and exceptional service across Northern California.</p>
+          <p class="text-white/60 text-sm leading-relaxed max-w-xs">Communities built to thrive &mdash; operational excellence, modern technology, and exceptional service across California.</p>
           <div class="mt-5 flex flex-col gap-2 text-sm">
             <a href="${PHONE_HREF}" class="footer-link inline-flex items-center gap-2">${icon("phone", "w-4 h-4")} ${PHONE_DISPLAY}</a>
             <a href="mailto:${EMAIL_GENERAL}" class="footer-link inline-flex items-center gap-2">${icon("mail", "w-4 h-4")} ${EMAIL_GENERAL}</a>

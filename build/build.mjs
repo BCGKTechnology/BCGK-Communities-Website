@@ -25,16 +25,17 @@ import {
   TermsOfServicePage,
 } from "./pages/legal.mjs";
 import { PROPERTIES } from "./data.mjs";
+import { ORG_DESCRIPTION, jsonLdFor, sitemapXml, robotsTxt, llmsTxt, webManifest, lazyImages } from "./seo.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DIST = path.join(__dirname, "..", "dist");
 
 const pages = [
-  { file: "index.html", path: "/", title: "Communities Built to Thrive", description: "BCGK Communities combines operational excellence, modern technology, and exceptional service to create communities residents love and properties that perform.", content: HomePage() },
+  { file: "index.html", path: "/", title: "Communities Built to Thrive", fullTitle: "BCGK Communities: Communities Built to Thrive", description: ORG_DESCRIPTION, content: HomePage() },
   { file: "about-our-story.html", path: "/about/our-story", title: "Our Story", description: "Building better communities starts here — learn how BCGK Communities was built from an owner's perspective.", content: OurStoryPage() },
   { file: "about-leadership.html", path: "/about/leadership", title: "Leadership", description: "Meet the leadership team behind BCGK Communities and our operating philosophy.", content: LeadershipPage() },
   { file: "about-award-winning.html", path: "/about/award-winning", title: "Award Winning", description: "BCGK Communities was recognized in Orangevale's 2025 People's Choice Awards for property management excellence.", content: AwardWinningPage() },
-  { file: "hire-us.html", path: "/hire-us", title: "Hire Us", description: "Better management, measurable results — see how BCGK Communities improves performance across our managed portfolio.", content: HireUsPage() },
+  { file: "hire-us.html", path: "/hire-us", title: "Hire Us", fullTitle: "Property Management Services | Hire BCGK Communities", description: "Better management, measurable results — see how BCGK Communities improves performance across our managed portfolio.", content: HireUsPage() },
   { file: "live-with-us.html", path: "/live-with-us/view-our-properties", title: "View Our Properties", description: "Explore BCGK Communities across Northern California and find your next home.", content: LiveWithUsPage() },
   { file: "upcoming-events.html", path: "/live-with-us/upcoming-events", title: "Upcoming Events", description: "See upcoming resident events, activities, and community gatherings at your BCGK community.", content: UpcomingEventsPage() },
   { file: "careers.html", path: "/careers", title: "Careers", description: "Explore career opportunities with BCGK Communities and find your place with our growing team.", content: CareersPage() },
@@ -44,7 +45,7 @@ const pages = [
   { file: "avoiding-rental-scams.html", path: "/residents/avoiding-rental-scams", title: "Avoiding Rental Scams", description: "Learn how to protect yourself from fraudulent rental listings and impersonation scams.", content: AvoidingRentalScamsPage() },
   { file: "owner-portal.html", path: "/owners/owner-portal", title: "Owner Portal", description: "Access your BCGK Communities Owner Portal for property financials, statements, and reports.", content: OwnerPortalPage() },
   { file: "employee-portal.html", path: "/employees/employee-portal", title: "Employee Portal", description: "Log in to the BCGK Communities employee portal.", content: EmployeePortalPage() },
-  { file: "contact-us.html", path: "/contact-us", title: "Contact Us", description: "Get in touch with the BCGK Communities team.", content: ContactUsPage() },
+  { file: "contact-us.html", path: "/contact-us", title: "Contact Us", description: "Contact BCGK Communities, with offices in Sacramento and Los Angeles. Call (916) 500-0807 or email customerservice@bcgkcommunities.com.", content: ContactUsPage() },
   { file: "accessibility-statement.html", path: "/accessibility-statement", title: "Accessibility Statement", description: "BCGK Communities' commitment to an accessible website experience.", content: AccessibilityStatementPage() },
   { file: "broker-licenses-and-disclosures.html", path: "/broker-licenses-and-disclosures", title: "Broker Licenses and Disclosures", description: "BCGK Communities California real estate broker license and disclosure information.", content: BrokerLicensesPage() },
   { file: "fair-housing-statement.html", path: "/fair-housing-statement", title: "Fair Housing Statement", description: "BCGK Communities' commitment to equal housing opportunity.", content: FairHousingPage() },
@@ -58,7 +59,10 @@ for (const p of PROPERTIES) {
     file: `property-${p.slug}.html`,
     path: `/live-with-us/view-our-properties/${p.slug}`,
     title: p.name,
-    description: p.summary,
+    fullTitle: `${/apartments$/i.test(p.name) ? p.name : `${p.name} Apartments`} in ${p.city} | BCGK Communities`,
+    // Short, search-snippet-sized description (the full summary is on the page).
+    description: `${p.name} is a ${p.units ? p.units.replace(/ units?$/, "-unit") + " " : ""}apartment community in ${p.city}, managed by BCGK Communities. ${p.tagline}`,
+    property: p,
     content: PropertyDetailPage(p),
   });
 }
@@ -67,9 +71,24 @@ fs.mkdirSync(DIST, { recursive: true });
 
 let count = 0;
 for (const p of pages) {
-  const html = page({ title: p.title, description: p.description, path: p.path, file: p.file, content: p.content });
+  const html = lazyImages(
+    page({
+      title: p.title,
+      fullTitle: p.fullTitle,
+      description: p.description,
+      path: p.path,
+      file: p.file,
+      jsonLd: jsonLdFor(p, p.property),
+      content: p.content,
+    })
+  );
   fs.writeFileSync(path.join(DIST, p.file), html, "utf8");
   count++;
 }
+
+fs.writeFileSync(path.join(DIST, "sitemap.xml"), sitemapXml(pages), "utf8");
+fs.writeFileSync(path.join(DIST, "robots.txt"), robotsTxt(), "utf8");
+fs.writeFileSync(path.join(DIST, "llms.txt"), llmsTxt(pages), "utf8");
+fs.writeFileSync(path.join(DIST, "site.webmanifest"), webManifest(), "utf8");
 
 console.log(`Built ${count} pages into ${DIST}`);

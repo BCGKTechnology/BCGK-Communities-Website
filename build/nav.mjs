@@ -5,7 +5,7 @@
 // for og:image and og:url -- a relative path silently fails to produce a
 // thumbnail in most of them. UPDATE THIS the moment a different domain
 // (e.g. a custom bcgkcommunities.com domain) becomes the live one.
-export const SITE_URL = "https://bcgkcommunities.com";
+export const SITE_URL = "https://www.bcgkcommunities.com";
 
 // Office addresses -- shown in the footer (every page) and on Contact Us.
 // Each links to the office's Google Maps share link (provided by Chuck).

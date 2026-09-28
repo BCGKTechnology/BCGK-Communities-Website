@@ -330,11 +330,11 @@ export const FAQS = [
   },
   {
     q: "What types of properties does BCGK Communities manage?",
-    a: "We manage a range of multifamily communities, from historic downtown buildings and efficiency studios to renovated suburban apartment communities across Northern California.",
+    a: "We manage a range of multifamily communities, from historic downtown buildings and efficiency studios to renovated suburban apartment communities across California.",
   },
   {
     q: "Where is BCGK Communities located?",
-    a: "BCGK Communities manages properties across Sacramento, Auburn, Orangevale, and other Northern California and Central Valley locations, including Bakersfield.",
+    a: "BCGK Communities has two offices: our Sacramento office at 1201 J Street, Sacramento, CA 95814, and our Los Angeles office at 9171 Wilshire Blvd, Suite 500, Beverly Hills, CA 90210. We manage communities across California, including Sacramento, Auburn, Orangevale, and Bakersfield.",
   },
   {
     q: "Is BCGK Communities licensed?",
