@@ -8,17 +8,17 @@
 export const SITE_URL = "https://bcgkcommunities.com";
 
 // Office addresses -- shown in the footer (every page) and on Contact Us.
-// Each links to a Google Maps search for that exact address.
+// Each links to the office's Google Maps share link (provided by Chuck).
 export const OFFICES = [
   {
     name: "Sacramento Office",
     lines: ["1201 J Street", "Sacramento, CA 95814"],
-    mapUrl: "https://www.google.com/maps/search/?api=1&query=1201+J+Street%2C+Sacramento%2C+CA+95814",
+    mapUrl: "https://share.google/Bo7ItlhiFyzYMNuyb",
   },
   {
     name: "Los Angeles Office",
     lines: ["9171 Wilshire Blvd, Suite 500", "Beverly Hills, CA 90210"],
-    mapUrl: "https://www.google.com/maps/search/?api=1&query=9171+Wilshire+Blvd%2C+Suite+500%2C+Beverly+Hills%2C+CA+90210",
+    mapUrl: "https://share.google/PL2gyTzF5hRd2zA5y",
   },
 ];
 

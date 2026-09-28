@@ -12,7 +12,7 @@ import {
   Marquee,
 } from "../components.mjs";
 import { WHAT_WE_PROVIDE } from "../data.mjs";
-import { EMAIL_CONTACT_1, EMAIL_CONTACT_2 } from "../nav.mjs";
+import { EMAIL_GENERAL } from "../nav.mjs";
 
 const MARQUEE_ITEMS = [
   "OPERATIONAL EXCELLENCE",
@@ -154,10 +154,10 @@ export function HomePage() {
       <div class="max-w-site mx-auto px-6 md:px-8 grid lg:grid-cols-2 gap-12">
         <div>
           ${Eyebrow("Connect With Us")}
-          <h2 class="heading-2 mt-2">Questions, concerns, or interested in collaborating?</h2>
+          <h2 class="heading-2 mt-2">Let's Work Together</h2>
           <p class="body-lg text-gray-500 mt-5">Submit your contact information below and our team will follow up with you directly.</p>
           <div class="mt-8 flex flex-col gap-3 text-sm text-gray-600">
-            <p class="flex items-start gap-2"><span class="shrink-0 mt-[3px]">${icon("mail", "w-4 h-4 text-brand-greenDeeper")}</span><span class="min-w-0">Routed to our team at <a href="mailto:${EMAIL_CONTACT_1}" class="underline">${EMAIL_CONTACT_1}</a> &amp; <a href="mailto:${EMAIL_CONTACT_2}" class="underline">${EMAIL_CONTACT_2}</a></span></p>
+            <p class="flex items-start gap-2"><span class="shrink-0 mt-[3px]">${icon("mail", "w-4 h-4 text-brand-greenDeeper")}</span><span class="min-w-0">Routed to our team at <a href="mailto:${EMAIL_GENERAL}" class="underline">${EMAIL_GENERAL}</a></span></p>
           </div>
         </div>
         <div>${ContactForm({ id: "home-contact" })}</div>
