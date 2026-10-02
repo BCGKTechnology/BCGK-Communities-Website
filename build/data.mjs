@@ -334,7 +334,7 @@ export const FAQS = [
   },
   {
     q: "Where is BCGK Communities located?",
-    a: "BCGK Communities has two offices: our Sacramento office at 1201 J Street, Sacramento, CA 95814, and our Los Angeles office at 9171 Wilshire Blvd, Suite 500, Beverly Hills, CA 90210. We manage communities across California, including Sacramento, Auburn, Orangevale, and Bakersfield.",
+    a: "BCGK Communities has two offices: our Sacramento office at 1201 J St Ste 200, Sacramento, CA 95814, and our Los Angeles office at 9171 Wilshire Blvd, Suite 500, Beverly Hills, CA 90210. We manage communities across California, including Sacramento, Auburn, Orangevale, and Bakersfield.",
   },
   {
     q: "Is BCGK Communities licensed?",

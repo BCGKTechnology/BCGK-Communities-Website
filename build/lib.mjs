@@ -2,7 +2,7 @@
 // Self-contained build: real Tailwind CSS is compiled at build time (css/tailwind.css)
 // and icons are inlined SVG (build/icons.mjs) -- no CDN / network dependency to preview.
 
-import { SITE_URL, GA_MEASUREMENT_ID } from "./nav.mjs";
+import { SITE_URL, GA_MEASUREMENT_ID, GTM_CONTAINER_ID } from "./nav.mjs";
 
 export { icon } from "./icons.mjs";
 
@@ -14,6 +14,13 @@ function headBlock({ title, fullTitle, description, ogImagePath, ogImageWidth, o
   const absolutePageUrl = file === "index.html" ? `${SITE_URL}/` : `${SITE_URL}/${file}`;
   const docTitle = fullTitle || `${title} | BCGK Communities`;
   return `
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','${GTM_CONTAINER_ID}');</script>
+  <!-- End Google Tag Manager -->
   <meta charset="UTF-8" />
   <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}"></script>
@@ -72,6 +79,10 @@ export function page({
 ${headBlock({ title, fullTitle, description, ogImagePath, ogImageWidth, ogImageHeight, file, jsonLd })}
 </head>
 <body class="bg-white text-ink font-sans antialiased ${bodyClass}" data-path="${path}">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_CONTAINER_ID}"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
   ${content}
 </body>

@@ -25,7 +25,7 @@ const PHONE_E164 = "+1-916-500-0807";
 
 const abs = (file) => (file === "index.html" ? `${SITE_URL}/` : `${SITE_URL}/${file}`);
 
-// "1201 J Street" / "Sacramento, CA 95814" -> PostalAddress
+// "1201 J St Ste 200" / "Sacramento, CA 95814" -> PostalAddress
 function postalAddress(lines) {
   const [street, cityLine] = lines;
   const m = cityLine.match(/^(.*),\s*([A-Z]{2})\s+(\d{5})$/);

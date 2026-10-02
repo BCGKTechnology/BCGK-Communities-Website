@@ -12,7 +12,7 @@ export const SITE_URL = "https://www.bcgkcommunities.com";
 export const OFFICES = [
   {
     name: "Sacramento Office",
-    lines: ["1201 J Street", "Sacramento, CA 95814"],
+    lines: ["1201 J St Ste 200", "Sacramento, CA 95814"],
     mapUrl: "https://share.google/Bo7ItlhiFyzYMNuyb",
   },
   {
@@ -23,6 +23,9 @@ export const OFFICES = [
 ];
 
 // Google Analytics 4 measurement ID (loaded on every page via lib.mjs).
+// Google Tag Manager container (head snippet + body noscript via lib.mjs).
+export const GTM_CONTAINER_ID = "GTM-WHKWSLVH";
+
 export const GA_MEASUREMENT_ID = "G-FC802FQB61";
 
 export const PHONE_DISPLAY = "(916) 500-0807";
