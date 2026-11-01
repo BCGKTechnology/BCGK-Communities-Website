@@ -28,6 +28,8 @@ const POSTMARK_API_URL = "https://api.postmarkapp.com/email";
 const TO_RECIPIENTS = [
   "chuck@bcgk.com",
   "alex@bcgk.com",
+  "brandon@bcgk.com",
+  "helena@bcgk.com",
   "customerservice@bcgkcommunities.com",
 ].join(",");
 
